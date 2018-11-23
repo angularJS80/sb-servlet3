@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.demo.example</groupId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <description>project for Spring boot</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.17.RELEASE</version>
+    </parent>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <commons-lang.version>3.6</commons-lang.version>
+        <jjwt.version>0.7.0</jjwt.version>
+        
+    </properties>
+
+    <dependencies>
+    		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-legacy -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-legacy</artifactId>
+		    <version>1.1.0.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+       <dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		 
+	   </dependency>
+
+
+         
+    </dependencies>
+
+
+
+
+    <build>
+     	<finalName>sbexample</finalName>
+     	<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+        
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <logback.loglevel>DEBUG</logback.loglevel>
+                <spring.profiles.active>dev</spring.profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <properties>
+                <wildflyhost>ks-jbossmng.minigate.net</wildflyhost>
+				<wildflyport>80</wildflyport>
+				<wildflyusername>wasadmin</wildflyusername>
+				<wildflypassword>was.admin</wildflypassword>
+				<warfilename>sbexample.war</warfilename>
+            </properties>
+
+            <id>wildfly.redeploy</id>
+            <build>
+                <plugins>
+                    <!-- Frontend -->
+		            <plugin>
+					  <groupId>org.wildfly.plugins</groupId>
+					  <artifactId>wildfly-maven-plugin</artifactId>
+					  <version>1.1.0.Alpha10</version>
+					  <executions>
+					    <execution>
+					      <phase>install</phase>
+					      <goals>
+					        <goal>redeploy</goal>
+					      </goals>
+					    </execution>
+					  </executions>
+					  <configuration>
+					    <force>true</force>
+					    <hostname>${wildflyhost}</hostname>
+					    
+					    <port>${wildflyport}</port>
+					    <username>${wildflyusername}</username>
+					    <password>${wildflypassword}</password>
+					    <filename>${warfilename}</filename>
+					  </configuration>
+					</plugin>                    
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    <artifactId>sbexample</artifactId>
+    <name>webprj</name>
+</project>
